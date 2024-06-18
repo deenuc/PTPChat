@@ -161,21 +161,26 @@
                     }
                     console.log(data);
                     if (data.guides) {
-                        var records = data.guides;
-                        var guidesHTML = '';
-                        for (let i = 0; i < records.length; i++) {
-                            // knowledgeHtml = knowledgeHtml + "<p> " + records[i].Content_Link__c + "</p>";
-                            guidesHTML = guidesHTML + '<div class="card" style="width: 18rem;">';
-                            guidesHTML = guidesHTML + '<div class="card-body">';
-                            guidesHTML = guidesHTML + '<h5 class="card-title">' + records[i].Name + '</h5>';
-                            guidesHTML = guidesHTML + ' <p class="card-text"> Operating System : ' + records[i].OperatingSystem + '</p>';
-                            if (records[i].ContentCategory) {
-                                guidesHTML = guidesHTML + '<h5 class="card-title">' + records[i].ContentCategory + '</h5>';
+                        if (Array.isArray(data.guides)){
+                            var records = data.guides;
+                            var guidesHTML = '';
+                            for (let i = 0; i < records.length; i++) {
+                                // knowledgeHtml = knowledgeHtml + "<p> " + records[i].Content_Link__c + "</p>";
+                                guidesHTML = guidesHTML + '<div class="card" style="width: 18rem;">';
+                                guidesHTML = guidesHTML + '<div class="card-body">';
+                                guidesHTML = guidesHTML + '<h5 class="card-title">' + records[i].Name + '</h5>';
+                                guidesHTML = guidesHTML + ' <p class="card-text"> Operating System : ' + records[i].OperatingSystem + '</p>';
+                                if (records[i].ContentCategory) {
+                                    guidesHTML = guidesHTML + '<h5 class="card-title">' + records[i].ContentCategory + '</h5>';
+                                }
+                                guidesHTML = guidesHTML + ' <a href="' + records[i].URL + ' "target="_blank" class="btn btn-primary">Go to Link</a>';
+                                guidesHTML = guidesHTML + '</div>  </div> <br/>';
                             }
-                            guidesHTML = guidesHTML + ' <a href="' + records[i].URL + ' "target="_blank" class="btn btn-primary">Go to Link</a>';
-                            guidesHTML = guidesHTML + '</div>  </div> <br/>';
+                            $("#edifyContent").html(guidesHTML);
                         }
-                        $("#edifyContent").html(guidesHTML);
+                        else {
+                            $("#edifyContent").html(data.guides.message);
+                        }
                     }
                     else {
                         $("#edifyContent").html(data.guides.message);
